@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum DistanciadelJugador
 {
@@ -18,15 +19,18 @@ public class Enemie : MonoBehaviour
     float deadTime;
     bool diying;
     DistanciadelJugador enemidistance;
-   
+    public float score;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        //Obtener la animación y mirar al jugador
         anim = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         enemidistance = DistanciadelJugador.far;
+
         
     }
 
@@ -37,6 +41,7 @@ public class Enemie : MonoBehaviour
         if (diying)
         {
             deadTime += Time.deltaTime;
+            
         }
         else
         {
@@ -44,6 +49,7 @@ public class Enemie : MonoBehaviour
             playerdistance();
             LookPlayer();
             ChangeSpeed();
+           
         }
 
         if (deadTime > 2)
@@ -65,6 +71,7 @@ public class Enemie : MonoBehaviour
         
     }
 
+    // Impacto de balas y muerte del enemigo
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))
@@ -72,14 +79,16 @@ public class Enemie : MonoBehaviour
             enemieLife -= 25;
 
             if (enemieLife <= 0)
-            {
+            {            
+             
+             anim.SetTrigger("Dead");             
+             diying = true;
                
-              anim.SetTrigger("Dead");             
-              diying = true;
-
-                
             }
+
         }
+
+        
     }
 
     void LookPlayer()
@@ -119,5 +128,5 @@ public class Enemie : MonoBehaviour
                 break;
         }
     }
-
+       
 }

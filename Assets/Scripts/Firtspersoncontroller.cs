@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Firtspersoncontroller : MonoBehaviour
 {
@@ -10,14 +10,17 @@ public class Firtspersoncontroller : MonoBehaviour
     float hor;
     public float speed;
     public float speedHor;
+    public float range = 100f;
+    public Camera Camera;
 
     public GameObject bulletPrefab;
     public Transform cannon;
     public float frecuency;
 
-    public int score;
-    public Text TXTscore;
+    public AudioSource _audioS;
 
+    public AudioClip LanzarFuego;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,9 @@ public class Firtspersoncontroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
+
         ver = Input.GetAxis("Vertical");
         hor = Input.GetAxis("Horizontal");
 
@@ -36,6 +42,7 @@ public class Firtspersoncontroller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Shooting();
+            PlaySoundEffect(LanzarFuego);
 
         }
 
@@ -50,5 +57,18 @@ public class Firtspersoncontroller : MonoBehaviour
       Rigidbody rb = temp.GetComponent<Rigidbody>();
 
         rb.AddForce(cannon.forward * frecuency, ForceMode.Impulse);
+
+        RaycastHit hit;
+        if (Physics.Raycast(cannon.transform.position, cannon.transform.forward, out hit, range))
+        {
+            Debug.Log(hit.transform.name);
+        }
+    }
+      
+    void PlaySoundEffect(AudioClip clip)
+    {
+        _audioS.clip = clip;
+        _audioS.Play();
+
     }
 }
