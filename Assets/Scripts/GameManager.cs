@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     public int limitTime;
     public GameObject endGame;
 
-    
+    public int score;
 
+    public TextMeshProUGUI textscore;
     public TextMeshProUGUI times;
 
     // Start is called before the first frame update
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
         }
 
         times.text = Mathf.RoundToInt(gameTime) + " / " + limitTime;
+
+        textscore.text = "Score: " + score.ToString();
     }
 
     void CreateEnemie()

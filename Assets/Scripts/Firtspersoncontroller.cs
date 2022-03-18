@@ -17,10 +17,7 @@ public class Firtspersoncontroller : MonoBehaviour
     public Transform cannon;
     public float frecuency;
 
-    public AudioSource _audioS;
-
-    public AudioClip LanzarFuego;
-    
+       
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +38,7 @@ public class Firtspersoncontroller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Shooting();
-            PlaySoundEffect(LanzarFuego);
+            Shooting();          
 
         }
 
@@ -65,10 +61,4 @@ public class Firtspersoncontroller : MonoBehaviour
         }
     }
       
-    void PlaySoundEffect(AudioClip clip)
-    {
-        _audioS.clip = clip;
-        _audioS.Play();
-
-    }
-}
+   }

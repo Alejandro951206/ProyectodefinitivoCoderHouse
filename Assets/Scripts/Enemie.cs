@@ -19,7 +19,7 @@ public class Enemie : MonoBehaviour
     float deadTime;
     bool diying;
     DistanciadelJugador enemidistance;
-    public float score;
+    
 
 
     // Start is called before the first frame update
@@ -79,11 +79,13 @@ public class Enemie : MonoBehaviour
             enemieLife -= 25;
 
             if (enemieLife <= 0)
-            {            
-             
-             anim.SetTrigger("Dead");             
+            {
+             GetComponent<Collider>().enabled = false;
+                GetComponent<Rigidbody>().useGravity = false;
+                anim.SetTrigger("Dead");             
              diying = true;
-               
+             GameManager.gM.score++;  
+
             }
 
         }
