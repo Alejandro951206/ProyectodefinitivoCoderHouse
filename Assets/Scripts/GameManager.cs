@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,13 +14,16 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public int limitTime;
     public GameObject endGame;
+    public GameObject scoreTable;
 
     public int score;
 
     public TextMeshProUGUI textscore;
     public TextMeshProUGUI times;
+    public TMP_InputField aliass;
 
-    // Start is called before the first frame update
+
+
     void Start()
     {
         gM = this;
@@ -37,6 +41,7 @@ public class GameManager : MonoBehaviour
         if (gameTime > limitTime)
         {
             endGame.SetActive(true);
+            scoreTable.SetActive(true);
         }
 
         times.text = Mathf.RoundToInt(gameTime) + " / " + limitTime;
@@ -51,4 +56,17 @@ public class GameManager : MonoBehaviour
         currentEnemies++;
 
     }
+
+    public void buttonalias()
+    {
+        if (aliass.text != null)
+        {
+            HighScore.highScore.aka.Add(aliass.text);
+            HighScore.highScore.puntos[0] = score.ToString();
+            SceneManager.LoadScene("ScoreTable");
+        }
+
+    }
+
+
 }

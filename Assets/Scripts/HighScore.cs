@@ -9,7 +9,7 @@ public class HighScore : MonoBehaviour
     public static HighScore highScore;
 
     public List<string> aka;
-    public string[] scorehigh;
+    public string[] puntos;
 
 
     void Awake()

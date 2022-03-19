@@ -26,9 +26,7 @@ public class Firtspersoncontroller : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
-        
+    {        
 
         ver = Input.GetAxis("Vertical");
         hor = Input.GetAxis("Horizontal");
@@ -41,8 +39,6 @@ public class Firtspersoncontroller : MonoBehaviour
             Shooting();          
 
         }
-
-
     }
 
     void Shooting()
