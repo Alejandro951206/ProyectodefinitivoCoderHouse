@@ -7,6 +7,7 @@ public enum DistanciadelJugador
 {
     near,
     far,
+    disable,
 }
 public class Enemie : MonoBehaviour
 {
@@ -18,18 +19,22 @@ public class Enemie : MonoBehaviour
     Animator anim;
     float deadTime;
     bool diying;
-    DistanciadelJugador enemidistance;
+    private AudioSource _dead;
+    public DistanciadelJugador enemidistance;
+    bool stopIt = false;
     
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //Obtener la animación y mirar al jugador
+        //Obtener la animaciï¿½n y mirar al jugador
         anim = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         enemidistance = DistanciadelJugador.far;
+
+       
 
         
     }
@@ -37,6 +42,7 @@ public class Enemie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ChangeSpeed();
 
         if (diying)
         {
@@ -45,18 +51,22 @@ public class Enemie : MonoBehaviour
         }
         else
         {
-            EnemyMove();
-            playerdistance();
-            LookPlayer();
-            ChangeSpeed();
-           
+            if (!stopIt)
+            {
+
+                EnemyMove();
+                playerdistance();
+                LookPlayer();
+                
+            }           
+
         }
 
         if (deadTime > 2)
         {
             GameManager.gM.currentEnemies--;
             Destroy(gameObject);
-           
+            
 
         }
 
@@ -80,13 +90,21 @@ public class Enemie : MonoBehaviour
 
             if (enemieLife <= 0)
             {
-             GetComponent<Collider>().enabled = false;
+
+                
+                GetComponent<Collider>().enabled = false;
                 GetComponent<Rigidbody>().useGravity = false;
-                anim.SetTrigger("Dead");             
-             diying = true;
+                _dead = GetComponent<AudioSource>();
+                _dead.Play();
+                GameManager.gM.enemieList.Remove(gameObject);
+                anim.SetTrigger("Dead");
+               
+
+                diying = true;
+
              GameManager.gM.score++;  
 
-            }
+            }          
 
         }
 
@@ -126,9 +144,12 @@ public class Enemie : MonoBehaviour
             case DistanciadelJugador.far:
                 speed = 7;
                 break;
-            default:
+            case DistanciadelJugador.disable:
+                stopIt = true;
                 break;
         }
     }
-       
+
+   
+    
 }
