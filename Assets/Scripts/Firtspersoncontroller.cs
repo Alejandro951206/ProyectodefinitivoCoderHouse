@@ -64,7 +64,7 @@ public class Firtspersoncontroller : MonoBehaviour
             if (hit.transform.tag == "Enemigo")
             {
                 GameObject impactoGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-
+                Destroy(impactoGo, 3f);
             }
         }
     }
